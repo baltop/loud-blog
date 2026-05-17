@@ -1,0 +1,29 @@
+---
+import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
+import Layout from '../layouts/BlogPost.astro';
+---
+
+<Layout
+	title="소개"
+	description="블로그와 운영자에 대한 소개입니다."
+	pubDate={new Date('August 08 2021')}
+	heroImage={AboutHeroImage}
+>
+	<p>
+		안녕하세요. 이곳은 제가 배운 것, 만든 것, 그리고 떠오른 생각을 정리해두는 공간입니다.
+	</p>
+
+	<p>
+		주로 다음과 같은 주제로 글을 씁니다.
+	</p>
+
+	<ul>
+		<li>개발 관련 기록과 메모</li>
+		<li>읽고 본 것에 대한 짧은 감상</li>
+		<li>일상에서 떠올린 생각</li>
+	</ul>
+
+	<p>
+		궁금한 점이나 피드백이 있으시면 언제든 연락 주세요.
+	</p>
+</Layout>
