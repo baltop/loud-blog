@@ -1,0 +1,74 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead title={`검색 · ${SITE_TITLE}`} description="블로그 글을 검색합니다." />
+		<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+		<style>
+			main {
+				min-height: 60vh;
+			}
+			.search-hint {
+				color: rgb(var(--gray));
+				font-size: 0.95em;
+				margin-top: 0.5em;
+			}
+			/* Pagefind UI 다크모드 대응 */
+			:global(html.dark) :global(.pagefind-ui) {
+				--pagefind-ui-background: var(--header-bg);
+				--pagefind-ui-text: rgb(var(--gray-dark));
+				--pagefind-ui-primary: var(--accent);
+				--pagefind-ui-border: rgba(var(--gray), 30%);
+				--pagefind-ui-tag: var(--code-bg);
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>검색</h1>
+			<p class="search-hint">제목, 본문, 설명에서 키워드를 검색합니다.</p>
+			<div id="search"></div>
+		</main>
+		<Footer />
+		<script is:inline src="/pagefind/pagefind-ui.js"></script>
+		<script is:inline>
+			// Pagefind UI는 빌드 후 dist/pagefind/에 생성됩니다.
+			// dev 모드에서는 위 스크립트가 404이므로 검색이 동작하지 않습니다.
+			window.addEventListener('DOMContentLoaded', () => {
+				if (typeof PagefindUI === 'undefined') {
+					const el = document.getElementById('search');
+					if (el) {
+						el.innerHTML =
+							'<p style="color: rgb(var(--gray));">검색 인덱스를 불러올 수 없습니다. (개발 서버에서는 동작하지 않습니다 — 배포된 사이트에서 확인하세요)</p>';
+					}
+					return;
+				}
+				new PagefindUI({
+					element: '#search',
+					showSubResults: true,
+					resetStyles: false,
+					translations: {
+						placeholder: '검색어를 입력하세요',
+						clear_search: '지우기',
+						load_more: '더 보기',
+						search_label: '블로그 검색',
+						filters_label: '필터',
+						zero_results: '"[SEARCH_TERM]"에 대한 검색 결과가 없습니다.',
+						many_results: '"[SEARCH_TERM]"에 대한 결과 [COUNT]개',
+						one_result: '"[SEARCH_TERM]"에 대한 결과 1개',
+						alt_search: '"[SEARCH_TERM]"에 대한 결과 없음. 대신 "[DIFFERENT_TERM]"을 검색합니다',
+						search_suggestion: '"[SEARCH_TERM]"에 대한 결과를 찾지 못했습니다. 다음 검색어를 시도해 보세요:',
+						searching: '"[SEARCH_TERM]" 검색 중...',
+					},
+				});
+			});
+		</script>
+	</body>
+</html>
