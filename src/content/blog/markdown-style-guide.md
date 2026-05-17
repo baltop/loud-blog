@@ -1,6 +1,6 @@
 ---
-title: 'Markdown Style Guide'
-description: 'Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.'
+title: '[참고] 마크다운 문법 정리'
+description: 'Astro 블로그에서 사용할 수 있는 마크다운 문법 모음입니다. 글 작성 시 참고하세요.'
 pubDate: 'Jun 19 2024'
 heroImage: '../../assets/blog-placeholder-1.jpg'
 ---
