@@ -1,35 +1,82 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const recentPosts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 5);
 ---
 
 <!doctype html>
 <html lang="ko">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.intro {
+				margin-bottom: 3em;
+			}
+			.recent-list {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			.recent-list li {
+				display: flex;
+				gap: 1em;
+				padding: 0.5em 0;
+				border-bottom: 1px solid var(--border);
+			}
+			.recent-list li:last-child {
+				border-bottom: none;
+			}
+			.recent-date {
+				color: var(--text-faint);
+				font-size: 0.85em;
+				min-width: 6.5em;
+				white-space: nowrap;
+			}
+			.recent-title {
+				color: var(--text);
+				text-decoration: none;
+			}
+			.recent-title:hover {
+				color: var(--accent);
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>👋 안녕하세요</h1>
-			<p>
-				<a href="https://astro.build/">Astro</a>로 만든 블로그입니다.
-				배포는 <a href="https://pages.cloudflare.com/">Cloudflare Pages</a> 무료 티어를 사용합니다.
-			</p>
-			<p>아래 항목을 수정해 나만의 블로그로 꾸며보세요.</p>
-			<ul>
-				<li>이 페이지: <code>src/pages/index.astro</code></li>
-				<li>사이트 제목/설명: <code>src/consts.ts</code></li>
-				<li>상단 메뉴: <code>src/components/Header.astro</code></li>
-				<li>하단 푸터: <code>src/components/Footer.astro</code></li>
-				<li>블로그 글: <code>src/content/blog/</code> 폴더의 마크다운 파일</li>
-				<li>글 레이아웃: <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				자세한 사용법은 <a href="https://docs.astro.build/">Astro 공식 문서</a>를 참고하세요.
-			</p>
+			<section class="intro">
+				<h1>안녕하세요</h1>
+				<p>
+					<a href="https://astro.build/">Astro</a>와
+					<a href="https://pages.cloudflare.com/">Cloudflare Pages</a>로 만든 한국어 블로그입니다.
+					배운 것, 만든 것, 그리고 떠오른 생각을 짧게라도 기록하려고 합니다.
+				</p>
+			</section>
+
+			<section>
+				<h2>최근 글</h2>
+				<ul class="recent-list">
+					{
+						recentPosts.map((post) => (
+							<li>
+								<span class="recent-date">
+									<FormattedDate date={post.data.pubDate} />
+								</span>
+								<a class="recent-title" href={`/blog/${post.id}/`}>
+									{post.data.title}
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
 		</main>
 		<Footer />
 	</body>

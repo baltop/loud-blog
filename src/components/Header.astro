@@ -6,52 +6,50 @@ import ThemeToggle from './ThemeToggle.astro';
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
-		<div class="internal-links">
+		<a href="/" class="site-title">{SITE_TITLE}</a>
+		<div class="nav-links">
 			<HeaderLink href="/">홈</HeaderLink>
 			<HeaderLink href="/blog">블로그</HeaderLink>
 			<HeaderLink href="/search">검색</HeaderLink>
 			<HeaderLink href="/about">소개</HeaderLink>
-		</div>
-		<div class="header-actions">
 			<ThemeToggle />
 		</div>
 	</nav>
 </header>
 <style>
 	header {
-		margin: 0;
-		padding: 0 1em;
+		border-bottom: 1px solid var(--border);
 		background: var(--header-bg);
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
-		transition: background-color 0.2s ease;
-	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
-
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
 	}
 	nav {
+		max-width: 720px;
+		margin: 0 auto;
+		padding: 1em 1.5em;
 		display: flex;
-		align-items: center;
 		justify-content: space-between;
+		align-items: center;
+		gap: 1em;
+		flex-wrap: wrap;
 	}
-	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
+	.site-title {
+		font-size: 1.05em;
+		font-weight: 700;
+		color: var(--text);
+		text-decoration: none;
+		letter-spacing: -0.01em;
+	}
+	.site-title:hover {
+		color: var(--accent);
 		text-decoration: none;
 	}
-	nav a.active {
-		text-decoration: none;
-		border-bottom-color: var(--accent);
-	}
-	.header-actions {
+	.nav-links {
 		display: flex;
 		align-items: center;
+		gap: 0.2em;
+	}
+	@media (max-width: 720px) {
+		nav {
+			padding: 0.8em 1.2em;
+		}
 	}
 </style>
