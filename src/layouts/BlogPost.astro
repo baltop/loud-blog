@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Comments from '../components/Comments.astro';
@@ -61,7 +60,7 @@ const { title, description, pubDate, updatedDate, heroImage, showComments = true
 		<main>
 			<article data-pagefind-body>
 				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
+					{heroImage && <img src={heroImage.src} width={1020} height={510} alt="" />}
 				</div>
 				<div class="prose">
 					<div class="title">
